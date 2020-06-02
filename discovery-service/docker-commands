@@ -1,0 +1,37 @@
+
+// Grant me permission to docker
+sudo usermod -a -G docker $USER
+
+//Enables connection access to docker
+sudo chmod 777 /var/run/docker.sock
+
+//Remove all containners
+docker kill $(docker ps -a -q)
+
+//Remove all stoped containers.
+docker rm $(docker ps -a -q)
+
+//Allows me to push to the registry
+docker run -d --name registry -p 5000:5000 registry --restart=always
+docker run -d -p 5000:5000 registry:2
+
+docker run -d --name registry -p 5000:5000 registry
+
+//Fail localhost:5000 before returnning.
+//docker run -p 5000:5000 registry:2
+
+
+// Enables connection access to home docker
+sudo chmod g+rwx "/home/leo/.docker" -R
+
+// Grant me permission to home docker
+sudo chown "leo":"leo" /home/"leo"/.docker -R
+
+//Re start containners
+docker restart $(docker ps -a -q)
+
+// Clean up any unsued container,images etc..
+
+docker system prune -a
+
+
