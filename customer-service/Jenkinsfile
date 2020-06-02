@@ -16,13 +16,13 @@ node {
 
         stage('Image') {
             dir ('customer-service') {
-                def app = docker.build "localhost:5000/customer-service:${env.version}"
+                def app = docker.build "gauthamdharsan/customer-service:${env.version}"
                 app.push()
             }
         }
 
         stage ('Run') {
-            docker.image("localhost:5000/customer-service:${env.version}").run('-p 3333:3333 -h customer --name customer --link discovery --link accounts')
+            docker.image("gauthamdharsan/customer-service:${env.version}").run('-p 3333:3333 -h customer --name customer --link discovery --link accounts')
         }
 
         stage ('Final') {
